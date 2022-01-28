@@ -22,7 +22,6 @@ from youtube_dl.utils import (
 
 @Client.on_message(filters.command("song") & ~filters.edited)
 async def song(client, message):
-    cap = "@JEBotZ"
     url = message.text.split(None, 1)[1]
     rkp = await message.reply("Processing...")
     if not url:
@@ -62,7 +61,7 @@ async def song(client, message):
         with YoutubeDL(opts) as rip:
             rip_data = rip.extract_info(url)
     except DownloadError as DE:
-        await rkp.edit(f"`{str(DE)}`")
+        await rkp.edit(f'`{DE}`')
         return
     except ContentTooShortError:
         await rkp.edit("`The download content was too short.`")
@@ -88,12 +87,13 @@ async def song(client, message):
         await rkp.edit("`There was an error during info extraction.`")
         return
     except Exception as e:
-        await rkp.edit(f"{str(type(e)): {str(e)}}")
+        await rkp.edit(f'{str(type(e)): {e}}')
         return
     time.time()
     if song:
         await rkp.edit("Uploading...") #ImJanindu
         lol = "./etc/thumb.jpg"
+        cap = "@JEBotZ"
         lel = await message.reply_audio(
                  f"{rip_data['id']}.mp3",
                  duration=int(rip_data["duration"]),
